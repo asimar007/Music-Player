@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Music Player</title>
+	<link rel="stylesheet" href="style.css">
+	<script src="https://kit.fontawesome.com/30f95938bc.js" crossorigin="anonymous"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="Music">
+		<nav>
+			<div class="circle">
+				<i class="fa-solid fa-angle-left"></i>
+			</div>
+			<div class="circle">
+				<i class="fa-solid fa-bars-progress"></i>
+			</div>
+		</nav>
+		<img src="Media/Thumb.jpg" class="Song-Image">
+		<h1>Daddy Yankee Despacito Remix ft. Justin Bieber</h1>
+		<p>Luis Fonsi ft. Justin Bieber</p>
+
+		<audio id="song">
+			<source src="Media/Despa.mp3" type="audio/mpeg">
+		</audio>
+		<input type="range" value="0" id="progress">
+
+		<div class="controls">
+			<div><i class="fa-solid fa-backward"></i></div>
+			<div onclick="PlayPause()"><i class="fa-solid fa-play" id="clricon"></i></div>
+			<div><i class="fa-solid fa-forward"></i></div>
+		</div>
+
+		</div>
+	</div>
+	<script>
+		
+		let progress = document.getElementById("progress");
+		let song = document.getElementById("song");
+		let clricon = document.getElementById("clricon");
+
+		song.onloadedmetadata = function() {
+			progress.max = song.duration;
+			progress.value = song.currentTime;
+		}
+
+		function PlayPause() {
+			if(clricon.classList.contains("fa-pause")) {
+				song.pause();
+				clricon.classList.remove("fa-pause");
+				clricon.classList.add("fa-play");
+			}
+			else{
+				song.play();
+				clricon.classList.add("fa-pause");
+				clricon.classList.remove("fa-play");
+			}
+		}
+		if(song.play()) {
+			setInterval(()=>{
+				progress.value = song.currentTime;
+			},500);
+		}
+
+		progress.onchange = function() {
+			song.play();
+			song.currentTime = progress.value;
+			clricon.classList.add("fa-pause");
+			clricon.classList.remove("fa-play");
+		}
+	</script>
+</body>
+</html>
